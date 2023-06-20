@@ -30,6 +30,7 @@
         <div class="col-3">
           <div class="btn-group">
             <button
+              id="league"
               class="btn btn-secondary btn-lg dropdown-toggle"
               type="button"
               data-toggle="dropdown"
@@ -39,11 +40,11 @@
               Select League
             </button>
             <div class="dropdown-menu">
-              {% for i in league_data['response'] %}
+              {% for i in league_data%}
 
               <div>
-                <button type="button" class="btn btn-light">
-                  {{ i['league']['name'] }}
+                <button type="button" class="league-option btn btn-light">
+                  {{ i }}
                 </button>
               </div>
               {% endfor %}
@@ -77,16 +78,7 @@
             >
               Select Team
             </button>
-            <div class="dropdown-menu">
-              {% for i in data['response'] %}
-
-              <div>
-                <button type="button" class="btn btn-light">
-                  {{ i['team']['name'] }}
-                </button>
-              </div>
-              {% endfor %}
-            </div>
+            <div class="dropdown-menu"></div>
           </div>
         </div>
         <div class="col-3">
@@ -107,6 +99,16 @@
     </div>
     <div></div>
 
+    <script>
+      let league_el = document.getElementById("league");
+      let league_opt = document.getElementsByClassName("league-option");
+
+      for (let i = 0; i < league_opt.length; i++) {
+        league_opt[i].addEventListener("click", (e) => {
+          league_el.innerText = e.target.innerText;
+        });
+      }
+    </script>
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
