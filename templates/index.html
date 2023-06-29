@@ -25,80 +25,39 @@
         </div>
       </div>
     </div>
+    {% block content %}
     <div class="container">
-      <div class="row">
-        <div class="col-3">
-          <div class="btn-group">
-            <button
-              id="league"
-              class="btn btn-secondary btn-lg dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Select League
-            </button>
-            <div class="dropdown-menu">
-              {% for i in league_data%}
+      <div class="row ">
+        <div class="col">
+          <form action="#" method="POST">
+              <select name="league">
+                {% for i in league_data%}
+               
+                <option  value="{{ i['league']['id'] }}">
+                  {{ i['league']['name'] }}
+                </option>
 
-              <div>
-                <button type="button" class="league-option btn btn-light">
-                  {{ i }}
-                </button>
-              </div>
-              {% endfor %}
-            </div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="btn-group">
-            <button
-              class="btn btn-secondary btn-lg dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Select Season
-            </button>
-            <div class="dropdown-menu"></div>
-          </div>
-        </div>
-
-        <div class="col-3">
-          <div class="btn-group">
-            <button
-              id="teamDropdownButton"
-              class="btn btn-secondary btn-lg dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Select Team
-            </button>
-            <div class="dropdown-menu"></div>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="btn-group">
-            <button
-              class="btn btn-secondary btn-lg dropdown-toggle"
-              type="button"
-              data-toggle="dropdown"
-              aria-haspopup="true"
-              aria-expanded="false"
-            >
-              Select Player(s)
-            </button>
-            <div class="dropdown-menu"><p>...</p></div>
-          </div>
-        </div>
+                {% endfor %}
+              </select>
+            
+  
+              <select name="year" >
+              <p>{% set years = [] %}</p>
+              {% for i in league_data %} {% if i['seasons'][0]['year'] not in
+              years %}
+              <p>{% set _ = years.append(i['seasons'][0]['year']) %}</p>
+              <option value="{{i['seasons'][0]['year']}}">
+                <p>{{ i['seasons'][0]['year'] }}</p>
+              </option>
+              {% endif %} {% endfor %}
+            </select>
+          
+            <button type="submit">Search</button>
+          </form>
       </div>
     </div>
-    <div></div>
-
+    {% endblock %}
+  
     <script>
       let league_el = document.getElementById("league");
       let league_opt = document.getElementsByClassName("league-option");

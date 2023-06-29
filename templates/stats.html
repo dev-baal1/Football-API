@@ -1,0 +1,17 @@
+{% extends 'index.html' %} {% block content %}
+<div class="container">
+  <div class="col-12">
+    <p>Fixtures played: {{ stats['fixtures']['played']['total']}}</p>
+    <p>Wins: {{ stats['fixtures']['wins']['total'] }}</p>
+    <p>Losses: {{ stats['fixtures']['loses']['total'] }}</p>
+    <p>Draws: {{ stats['fixtures']['draws']['total'] }}</p>
+    <br />
+    <p>Goals for: {{ stats['goals']['for']['total']['total'] }}</p>
+    <p>Goals against: {{ stats['goals']['against']['total']['total'] }}</p>
+    <br />
+    <p>Clean sheets: {{ stats['clean_sheet']['total'] }}</p>
+    <p>Clean sheets: {{ stats['clean_sheet']['total'] }}</p>
+  </div>
+</div>
+
+{% endblock %}
