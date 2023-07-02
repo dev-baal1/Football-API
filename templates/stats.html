@@ -1,16 +1,80 @@
 {% extends 'index.html' %} {% block content %}
+
 <div class="container">
-  <div class="col-12">
-    <p>Fixtures played: {{ stats['fixtures']['played']['total']}}</p>
-    <p>Wins: {{ stats['fixtures']['wins']['total'] }}</p>
-    <p>Losses: {{ stats['fixtures']['loses']['total'] }}</p>
-    <p>Draws: {{ stats['fixtures']['draws']['total'] }}</p>
-    <br />
-    <p>Goals for: {{ stats['goals']['for']['total']['total'] }}</p>
-    <p>Goals against: {{ stats['goals']['against']['total']['total'] }}</p>
-    <br />
-    <p>Clean sheets: {{ stats['clean_sheet']['total'] }}</p>
-    <p>Clean sheets: {{ stats['clean_sheet']['total'] }}</p>
+  <h2>{{team_stats['team']['name']}}</h2>
+  <div class="row">
+    <div class="col-4">
+      <p>Fixtures played: {{ team_stats['fixtures']['played']['total']}}</p>
+      <p>Wins: {{ team_stats['fixtures']['wins']['total'] }}</p>
+      <p>Losses: {{ team_stats['fixtures']['loses']['total'] }}</p>
+      <p>Draws: {{ team_stats['fixtures']['draws']['total'] }}</p>
+    </div>
+
+    <div class="col-4">
+      <p>Goals for: {{ team_stats['goals']['for']['total']['total'] }}</p>
+      <p>
+        Goals against: {{ team_stats['goals']['against']['total']['total'] }}
+      </p>
+    </div>
+    <div class="col-4">
+      <p>Clean sheets: {{ team_stats['clean_sheet']['total'] }}</p>
+    </div>
+  </div>
+</div>
+<br />
+<br />
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-6">
+      <form action="#" method="POST">
+        <select name="player_name">
+          {% for i in players_list %}
+          <option value="{{i['player']['id']}}">
+            {{ i['player']['name'] }}
+          </option>
+          {% endfor %}
+        </select>
+        <button type="submit">Enter</button>
+      </form>
+    </div>
+    <div class="col-6">
+      {% if player_id %} {% for i in player_stats%}
+
+      <h4>{{ i['player']['name'] }}</h4>
+      <div class="container"></div>
+      <div class="row">
+        <div class="col-4">
+          <img src="{{ i['player']['photo'] }}" alt="" />
+        </div>
+        <div class="col 4">
+          <p>First Name: {{ i['player']['firstname'] }}</p>
+          <p>Last Name: {{ i['player']['lastname'] }}</p>
+          <p>
+            Age: {{ i['player']['age']}} / {{ i['player']['birth']['date'] }}
+          </p>
+          <p>Nationality: {{ i['player']['nationality'] }}</p>
+          <p>Height: {{ i['player']['height'] }}</p>
+          <p>Weight: {{ i['player']['weight'] }}</p>
+        </div>
+        <div class="col-4">
+          <p>Appearances: {{ i['statistics'][0]['games']['appearences'] }}</p>
+          <p>Goals: {{ i['statistics'][0]['goals']['total'] }}</p>
+          <p>Shots: {{ i['statistics'][0]['shots']['total'] }}</p>
+          <p>Shots on Target: {{ i['statistics'][0]['shots']['on'] }}</p>
+          <p>Passes: {{ i['statistics'][0]['passes']['total'] }}</p>
+          <p>Pass Accuracy: {{ i['statistics'][0]['passes']['accuracy'] }}%</p>
+          <p>Duels Won: {{ i['statistics'][0]['duels']['won'] }}</p>
+          <p>
+            Interceptions: {{ i['statistics'][0]['tackles']['interceptions'] }}
+          </p>
+          <p>Yellow cards: {{ i['statistics'][0]['cards']['yellow'] }}</p>
+          <p>Res Cards: {{ i['statistics'][0]['cards']['red'] }}</p>
+        </div>
+
+        {%endfor%} {% endif %}
+      </div>
+    </div>
   </div>
 </div>
 

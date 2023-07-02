@@ -28,6 +28,23 @@ def get_team_stats(league, season, team):
     return team_stats
 
 
+def get_players_list(team, year):
+    url = "https://api-football-v1.p.rapidapi.com/v3/players"
+    querystring = {"team":team,"season":year}
+    
+    players_list = requests.get(url, headers=headers, params=querystring).json()['response']
+    return players_list
+
+def get_player_stats(player_id, year):
+    url = "https://api-football-v1.p.rapidapi.com/v3/players"
+    querystring = {"id":player_id,"season":year}
+
+    player_stats = requests.get(url, headers=headers, params=querystring).json()['response']
+
+    return player_stats
+
+
+
 @main_app.route('/', methods=['GET', 'POST'])
 def home():
     if request.method == 'POST':
@@ -56,15 +73,30 @@ def teams():
 
 @main_app.route('/stats', methods=['GET', 'POST'])
 def stats():
-
     league = request.args.get('league')
     year = request.args.get('year')
     team = request.args.get('team')
+    
+    if request.form.get('player_name'):
+        player_id = request.form.get('player_name')
+        team_stats = get_team_stats(league, year, team)
+        players_list = get_players_list(team, year)
+        
+        player_stats = get_player_stats(player_id, year)
+        
+        return render_template('stats.html',team_stats=team_stats,players_list=players_list ,player_id=player_id, player_stats=player_stats)
 
-    stats = get_team_stats(league, year, team)
-    print(stats)
-  
-    return render_template('stats.html', stats=stats)
+
+
+   
+   
+    else:
+    
+        team_stats = get_team_stats(league, year, team)
+        
+        players_list = get_players_list(team, year)
+
+        return render_template('stats.html', team_stats=team_stats, players_list=players_list)
 
 
 if __name__ == "__main__":
