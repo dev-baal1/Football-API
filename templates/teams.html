@@ -1,12 +1,14 @@
 {% extends 'index.html' %} {% block content %}
 <div class="container">
-  <form action="#" method="POST">
-    <select name="team_name">
-      {% for i in teams %}
-      <option value="{{i['team']['id']}}">{{ i['team']['name'] }}</option>
-      {% endfor %}
-    </select>
-    <button type="submit">Enter</button>
-  </form>
+  <div class="form-cont col">
+    <form class="col1" action="#" method="POST">
+      <select name="team_name">
+        {% for i in teams %}
+        <option value="{{i['team']['id']}}">{{ i['team']['name'] }}</option>
+        {% endfor %}
+      </select>
+      <button type="submit">Enter</button>
+    </form>
+  </div>
 </div>
 {% endblock %}

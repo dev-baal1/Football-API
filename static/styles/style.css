@@ -1,16 +1,12 @@
-body{
+.b1{
     background-color: black;
-}
-h1{
-    color: red;
+    color: white;
 }
 
-.dropdown-menu{
-    max-height: 20rem;
-    overflow: scroll;
- 
+
+.col1 {
+    display: flex;
+    justify-content: center;
+    
 }
 
-.dropdown-menu .btn{
-font-size: 0.9rem;
-}

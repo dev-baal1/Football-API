@@ -76,7 +76,7 @@ def stats():
     league = request.args.get('league')
     year = request.args.get('year')
     team = request.args.get('team')
-    
+    print(team)
     if request.form.get('player_name'):
         player_id = request.form.get('player_name')
         team_stats = get_team_stats(league, year, team)
