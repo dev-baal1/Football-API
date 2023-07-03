@@ -7,15 +7,12 @@ import os
 def config():
     load_dotenv()
 
-
-
-main_app = Flask(__name__)
  
 headers = {
 	"X-RapidAPI-Key": f"{os.getenv('api_key')}",
 	"X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
 }
-print(headers)
+
 
 def get_leagues():
     url = "https://api-football-v1.p.rapidapi.com/v3/leagues"
@@ -53,6 +50,9 @@ def get_player_stats(player_id, year):
 
 
 
+
+main_app = Flask(__name__)
+
 @main_app.route('/', methods=['GET', 'POST'])
 def home():
     config()
@@ -78,8 +78,6 @@ def teams():
             year = request.args.get('year')
             team_names = get_team_names(league_id, year)
             return render_template('teams.html', teams=team_names)
-
-   
 
 @main_app.route('/stats', methods=['GET', 'POST'])
 def stats():
