@@ -1,13 +1,21 @@
 from flask import Flask, render_template, request, redirect, url_for
 import requests
+from dotenv import load_dotenv
+import os
+
+
+def config():
+    load_dotenv()
+
+
 
 main_app = Flask(__name__)
-
+ 
 headers = {
-	"X-RapidAPI-Key": "8e166509famsh4c22546da213b07p164dcajsnd93994744682",
+	"X-RapidAPI-Key": f"{os.getenv('api_key')}",
 	"X-RapidAPI-Host": "api-football-v1.p.rapidapi.com"
 }
-
+print(headers)
 
 def get_leagues():
     url = "https://api-football-v1.p.rapidapi.com/v3/leagues"
@@ -47,6 +55,7 @@ def get_player_stats(player_id, year):
 
 @main_app.route('/', methods=['GET', 'POST'])
 def home():
+    config()
     if request.method == 'POST':
         league_id = request.form.get('league')
         year = request.form.get('year')
@@ -57,6 +66,7 @@ def home():
 
 @main_app.route('/teams', methods=['GET', 'POST'])
 def teams():
+        config()
         if request.form.get('team_name'):
             league_id = request.args.get('league')
             year = request.args.get('year')
@@ -73,6 +83,7 @@ def teams():
 
 @main_app.route('/stats', methods=['GET', 'POST'])
 def stats():
+    config()
     league = request.args.get('league')
     year = request.args.get('year')
     team = request.args.get('team')
@@ -86,14 +97,8 @@ def stats():
         
         return render_template('stats.html',team_stats=team_stats,players_list=players_list ,player_id=player_id, player_stats=player_stats)
 
-
-
-   
-   
     else:
-    
         team_stats = get_team_stats(league, year, team)
-        
         players_list = get_players_list(team, year)
 
         return render_template('stats.html', team_stats=team_stats, players_list=players_list)
